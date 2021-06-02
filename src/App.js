@@ -9,15 +9,22 @@ function App() {
   const [tasks, setTasks] = useState([])
 
   useEffect(() => {
-    const fetchTasks = async() => {
+   const getTasks = async () => {
+     const tasksFromServer = await fetchTasks()
+     setTasks(tasksFromServer)
+   }
+    getTasks();
+  }, [])
+
+  // fetch tasks
+   const fetchTasks = async() => {
       let url = "http://localhost:5000/tasks";
       const res = await fetch(url);
       const data = await res.json();
+      return data
       console.log(data);
     }
-    fetchTasks();
-  }, [])
-  
+
   // Add Task
   const addTask = (task) => {
     const id = Math.floor(Math.random() * 10000) + 1;
